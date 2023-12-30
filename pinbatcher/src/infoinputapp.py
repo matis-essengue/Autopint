@@ -4,17 +4,20 @@ import os
 import shutil
 from tkinter import simpledialog
 
+TEMP_DIR = './pinbatcher/temp'
+
 
 class InfoInputApp:
-    def __init__(self):
+    def __init__(self, gui=False):
         self.root = tk.Tk()
         self.root.title("Information input")
         self.title = None
         self.description = None
         self.link = None
 
-        self.select_files()
-        self.create_widgets()
+        if gui:
+            self.select_files()
+            self.create_widgets()
 
     def create_widgets(self):
         tk.Label(self.root, text="Title (max 100 chars):").pack()
@@ -40,17 +43,25 @@ class InfoInputApp:
 
         self.root.quit()  # Ferme la fenêtre
 
+    def clean_temp_directory(self):
+        if os.path.exists(TEMP_DIR):
+            for file in os.listdir(TEMP_DIR):
+                file_path = os.path.join(TEMP_DIR, file)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+
     def copy_files(self, files):
-        temp_dir = 'temp'
-        if not os.path.exists(temp_dir):
-            os.makedirs(temp_dir)
+        if not os.path.exists(TEMP_DIR):
+            os.makedirs(TEMP_DIR)
 
         for file in files:
-            shutil.copy(file, temp_dir)
+            shutil.copy(file, TEMP_DIR)
 
         return len(files)
 
     def select_files(self):
+        self.clean_temp_directory()
+
         file_types = [('JPEG', '*.jpg'), ('JPEG', '*.jpeg')]
         files = filedialog.askopenfilenames(filetypes=file_types)
         if files:

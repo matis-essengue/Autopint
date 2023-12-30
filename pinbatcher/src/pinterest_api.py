@@ -53,6 +53,6 @@ def exchange_code_for_token(code):
         raise Exception('Échec de l\'obtention du token d\'accès')
 
 
-# if __name__ == '__main__':
-webbrowser.open('http://localhost:5000')
-app.run(debug=True)
+def get_access_token():
+    webbrowser.open('http://localhost:5000')
+    app.run(debug=True)

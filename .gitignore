@@ -9,6 +9,7 @@ __pycache__/
 # fichiers a ignorer
 *.jpg
 *.jpeg
+.env
 
 # Distribution / packaging
 .Python
